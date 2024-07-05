@@ -74,7 +74,7 @@ public class Main {
         Thread barbeiro = new Thread(barbearia::atendeCliente);
         barbeiro.start();
 
-        for (int i = 1; i <= 10; i++) {
+        for (int i = 1; i <= 100; i++) {
             Cliente cliente = new Cliente(barbearia, i);
             Thread clienteThread = new Thread(cliente);
             clienteThread.start();
