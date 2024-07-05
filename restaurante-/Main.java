@@ -1,14 +1,12 @@
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.LinkedList;
 import java.util.Random;
 
 public class Main {
 
     public static class Restaurante{
         private final Semaphore vagas = new Semaphore(5);
-        private Lock trava_fila = new ReentrantLock();
         private Lock trava_num = new ReentrantLock();
         public int espaco;
         public boolean cheio;
@@ -23,13 +21,11 @@ public class Main {
     public static class Cliente implements Runnable{
         public int id;
         public Restaurante rest;
-        public LinkedList<Cliente> fila;
 ;
 
-        public Cliente(int id, Restaurante rest, LinkedList<Cliente> fila){
+        public Cliente(int id, Restaurante rest){
             this.id = id;
             this.rest = rest;
-            this.fila = fila;
         }
 
         @Override
@@ -70,10 +66,9 @@ public class Main {
 
     public static void main(String[] args) {
         Restaurante rest = new Restaurante();
-        LinkedList<Cliente> fila = new LinkedList<>();
 
         for (int i = 0; i < 100; i++){
-            Cliente c = new Cliente(i, rest, fila);
+            Cliente c = new Cliente(i, rest);
             Thread c_t = new Thread(c);
             c_t.start();
         }
