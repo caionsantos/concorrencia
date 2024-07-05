@@ -3,7 +3,6 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.Random;
-import java.util.concurrent.CyclicBarrier;
 import java.util.LinkedList;
 
 public class Main {
