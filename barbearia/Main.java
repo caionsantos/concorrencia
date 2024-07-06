@@ -41,15 +41,6 @@ class Barbearia {
         Thread.sleep(2000);
         System.out.println("Barbeiro terminou de atender o cliente " + clienteId);
 
-//        if (!semCadeiras.tryAcquire(10)) {
-//            System.out.println("Barbeiro foi dormir");
-//            lock.lock();
-//            this.dormindo = true;
-//            lock.unlock();
-//        }
-//        else {
-//            semCadeiras.release(10);
-//        }
         this.dormindo = true;
         semBarbeiro.release();
     }
