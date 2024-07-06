@@ -77,6 +77,9 @@ public class Main {
                     rest.trava_fila.unlock();
                     env.start();
                 }
+                else {
+                    break;
+                }
             }
         }
 
