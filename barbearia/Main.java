@@ -35,8 +35,8 @@ class Barbearia {
     }
 
     public void atendeCliente(int clienteId) throws InterruptedException {
-        semCadeiras.release();
         semBarbeiro.acquire();
+        semCadeiras.release();
         System.out.println("Barbeiro está atendendo o cliente " + clienteId);
         Thread.sleep(2000);
         System.out.println("Barbeiro terminou de atender o cliente " + clienteId);
