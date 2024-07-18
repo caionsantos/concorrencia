@@ -57,6 +57,7 @@ class Pessoa implements Runnable {
     public void run() {
         System.out.println("Pessoa " + id + " " + genero + " entrou na fila.");
         try {
+            Thread.sleep(5000);
             banheiro.entrarBanheiro(id, genero);
             Thread.sleep((long) (Math.random() * 1000));
             banheiro.sairBanheiro(id, genero);
@@ -75,6 +76,11 @@ public class Main {
             Pessoa pessoa = new Pessoa(banheiro, i, genero);
             Thread pessoaThread = new Thread(pessoa);
             pessoaThread.start();
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
         }
     }
 }
