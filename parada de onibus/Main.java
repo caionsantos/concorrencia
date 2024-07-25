@@ -68,7 +68,6 @@ public class Main {
     public static class Parada{
 
         int sentado;
-        boolean embarque;
         int esperando;
         private final Lock n_assentos = new ReentrantLock();
         private final Lock n_espera = new ReentrantLock();
@@ -112,21 +111,18 @@ public class Main {
         public void chegar(int i, Onibus self) throws InterruptedException {
             chegou.lock();
             sinc.lock();
-            try {
-                System.out.println("Ônibus " + i + " chegou");
-                onibus_chega.signalAll();
-                onibus_chega.await(4, TimeUnit.SECONDS);
-                System.out.println("Ônibus " + i + " saiu com " + this.sentado + " passageiros");
-                onibus_chega.signalAll();
-            } finally {
-                sinc.unlock();
-                n_assentos.lock();
-                entrar_onibus.release(this.sentado);
-                this.sentado = 0;
-                n_assentos.unlock();
-                chegou.unlock();
-                self.saida();
-            }
+            System.out.println("Ônibus " + i + " chegou");
+            onibus_chega.signalAll();
+            onibus_chega.await(4, TimeUnit.SECONDS);
+            System.out.println("Ônibus " + i + " saiu com " + this.sentado + " passageiros");
+            onibus_chega.signalAll();
+            sinc.unlock();
+            n_assentos.lock();
+            entrar_onibus.release(this.sentado);
+            this.sentado = 0;
+            n_assentos.unlock();
+            chegou.unlock();
+            self.saida();
         }
 
         Parada(){
