@@ -80,28 +80,22 @@ public class Main {
             chegou.lock();
             System.out.println("Passageiro " + passageiro.id + " está esperando o ônibus");
             chegou.unlock();
-            sinc.lock();
             n_espera.lock();
             this.esperando += 1;
             n_espera.unlock();
+            sinc.lock();
             onibus_chega.await();
             if (entrar_onibus.tryAcquire(1)) {
                 System.out.println("Passageiro " + passageiro.id + " entrou no ônibus");
-                n_espera.lock();
                 this.esperando -= 1;
                 if (this.esperando == 0) {
                     onibus_chega.signalAll();
                 }
-                n_espera.unlock();
-                n_assentos.lock();
                 this.sentado += 1;
-                n_assentos.unlock();
                 sinc.unlock();
             } else {
-                n_espera.lock();
                 this.esperando -= 1;
                 System.out.println("Passageiro " + passageiro.id + " não conseguiu subir");
-                n_espera.unlock();
                 onibus_chega.signalAll();
                 sinc.unlock();
                 this.entrar(passageiro);
