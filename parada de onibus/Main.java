@@ -1,5 +1,4 @@
 import java.util.concurrent.Semaphore;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -107,7 +106,9 @@ public class Main {
             sinc.lock();
             System.out.println("Ônibus " + i + " chegou");
             onibus_chega.signalAll();
-            onibus_chega.await(4, TimeUnit.SECONDS);
+            if (this.esperando > 0) {
+                onibus_chega.await();
+            }
             System.out.println("Ônibus " + i + " saiu com " + this.sentado + " passageiros");
             onibus_chega.signalAll();
             sinc.unlock();
